@@ -13,32 +13,32 @@ from word2vec import Word2VecTey
 from bert import BertEy
 from incremental_word_context import IncrementalWordContext
 
-number_executions = 10
-datasets_available = ["yelp", "twitter", "imdb"]
-instances_test = [10000, 20000, 30000, 50000, 100000, 200000]
-dimensions = [100, 384, 500]
+number_executions = 2
+datasets_available = ["twitter", "yelp"] #, "imdb"]
+instances_test = [10000] #, 20000, 30000, 50000, 100000, 200000]
+dimensions = [100] #, 384, 500]
 
-filename = datetime.now().strftime("%Y%m%d-results.csv")
+filename = datetime.now().strftime("%Y%m%d%H%M%S-results.csv")
 with open(f"{filename}", 'a') as f:
     f.write("execution,method,dimension,dataset,dataset_size,accuracy,kappa,time\n")
 
 for dimension in dimensions:
     models = [
-        ('hashing-tricks', HashingTrickTey(dimension)),
-        ('word2vec', Word2VecTey(size=dimension)),
         ('bert', BertEy()),
-        ('iwc', IncrementalWordContext(10000, dimension, 7, True))
+        ('hashing-tricks', HashingTrickTey(dimension)),
+        ('iwc', IncrementalWordContext(10000, dimension, 7, True)),
+        ('word2vec', Word2VecTey(size=dimension)),
     ]
 
-    for i in range(number_executions):
-        for env in datasets_available:
-            for instancesNumber in instances_test:
-
-                if env=="twitter":
+    for env in datasets_available:
+        for instancesNumber in instances_test:
+            for i in range(number_executions):
+                print(f"Starting iteration {i}")
+                if env == "twitter":
                     df_ = pd.read_csv("datasets/TwitterSentiment140_Shuffled.csv", names=["target", "id", "date", "flag", "user", "text"], encoding='latin-1')
                     df_[["text", "target"]].sample(instancesNumber).to_csv("TwitterSentiment140_Shuffled.csv", index=False)
 
-                elif env=="yelp":
+                elif env == "yelp":
                     df_ = pd.read_csv("datasets/yelp_review_clean.csv", encoding='latin-1')
                     df_[["text", "stars"]].sample(instancesNumber).to_csv("yelp_review_clean.csv", index=False)
                     
@@ -55,7 +55,7 @@ for dimension in dimensions:
                 log = []
 
                 for text_model_name, text_model in models:  
-
+                    print(f"[{datetime.now().strftime('%Y-%m-%d %H%:M:%S')}] Starting {text_model_name} ({dimension})")
                     ml_model = naive_bayes.GaussianNB()
                     metric = metrics.Accuracy()
                     metric_1 = metrics.CohenKappa()
@@ -93,7 +93,7 @@ for dimension in dimensions:
                         cont += 1
 
                     with open(f"{filename}", 'a') as f:
-                        f.write(f"{i},{text_model_name},{dimension},{env},{instances_test},{metric},{metric_1},{time.time() - start}\n")
+                        f.write(f"{i},{text_model_name},{dimension},{env},{instancesNumber},{metric.get()},{metric_1.get()},{time.time() - start}\n")
                     print(f"{text_model_name} - Accuracy: {metric} Time elapsed (sec): {time.time() - start}")
 
                     gc.collect()
