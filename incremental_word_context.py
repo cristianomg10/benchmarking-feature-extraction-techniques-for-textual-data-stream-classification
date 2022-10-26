@@ -144,7 +144,7 @@ class IncrementalWordContext:
                 self.__index_context += 1
                 # self.__word += 1
 
-    def transform_one(self, sentence, for_river=False):
+    def transform_one(self, sentence, for_river=True):
         ppmis = np.array([])
         for i in sentence.split(' '):
             if i in self.__ppmi.index:

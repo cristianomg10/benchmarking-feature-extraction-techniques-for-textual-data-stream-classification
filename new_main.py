@@ -17,6 +17,7 @@ number_executions = 2
 datasets_available = ["twitter", "yelp"] #, "imdb"]
 instances_test = [10000] #, 20000, 30000, 50000, 100000, 200000]
 dimensions = [100] #, 384, 500]
+store_kappa_for_checking = False
 
 filename = datetime.now().strftime("%Y%m%d%H%M%S-results.csv")
 with open(f"{filename}", 'a') as f:
@@ -55,7 +56,7 @@ for dimension in dimensions:
                 log = []
 
                 for text_model_name, text_model in models:  
-                    print(f"[{datetime.now().strftime('%Y-%m-%d %H%:M:%S')}] Starting {text_model_name} ({dimension})")
+                    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting {text_model_name} ({dimension})")
                     ml_model = naive_bayes.GaussianNB()
                     metric = metrics.Accuracy()
                     metric_1 = metrics.CohenKappa()
@@ -87,7 +88,10 @@ for dimension in dimensions:
 
                         metric.update(label, y_pred)
                         metric_1.update(label, y_pred)
-                    
+                        if store_kappa_for_checking == True:
+                            with open(f"{text_model_name}_{dimension}_{env}_{instancesNumber}_{i}-kappa-check.csv", "a") as f:
+                                f.write(f"{label},{y_pred}\n")
+                        
                         if (totalInstances != 0 and cont % (totalInstances/10) == 0) or (totalInstances == 0 and cont % 10000 == 0):
                             print("\t", cont, "of", totalInstances, "instances processed")                     
                         cont += 1
@@ -98,4 +102,7 @@ for dimension in dimensions:
 
                     gc.collect()
 
-                cache.clear_all()
+                try:
+                    cache.clear_all()
+                except:
+                    pass
