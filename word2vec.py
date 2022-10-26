@@ -11,7 +11,7 @@ class Word2VecTey:
     def __init__(self, size=100):
         self.size = size
         #wiki-english-20171001
-        self.model = Word2Vec(sentences=common_texts, vector_size=size, window=5, min_count=1, workers=4, \
+        self.model = Word2Vec(sentences=common_texts, vector_size=size, window=5, min_count=1, workers=50, \
         batch_words=1000)
 
     def transform_many(self, phrases):

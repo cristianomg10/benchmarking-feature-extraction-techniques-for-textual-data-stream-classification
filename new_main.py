@@ -25,9 +25,9 @@ with open(f"{filename}", 'a') as f:
 
 for dimension in dimensions:
     models = [
-        ('bert', BertEy()),
-        ('hashing-tricks', HashingTrickTey(dimension)),
-        ('iwc', IncrementalWordContext(10000, dimension, 7, True)),
+        #('bert', BertEy()),
+        #('hashing-tricks', HashingTrickTey(dimension)),
+        #('iwc', IncrementalWordContext(10000, dimension, 7, True)),
         ('word2vec', Word2VecTey(size=dimension)),
     ]
 
