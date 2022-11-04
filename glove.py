@@ -10,7 +10,7 @@ class Glove:
         self.embeddings_index = {}
         self.dimensions = dimensions
         
-        filename = f"pretrained/glove.6B.{dimensions}d.txt"
+        filename = f"pre-training/glove.6B.{dimensions}d.txt"
 
         with open(filename) as f:
             for line in f:

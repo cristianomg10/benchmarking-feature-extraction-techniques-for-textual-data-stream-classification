@@ -17,7 +17,7 @@ else:
     # Handle target environment that doesn't support HTTPS verification
     ssl._create_default_https_context = _create_unverified_https_context
 
-def loadDatasetTey(env="SMSSpam"):
+def loadDatasetTey(env="SMSSpam", size="10k"):
     if env == "SMSSpam":
         # Returns river textual stream dataset for binary classification
         return river.datasets.SMSSpam()
@@ -35,10 +35,13 @@ def loadDatasetTey(env="SMSSpam"):
         return river.stream.iter_pandas(X=X, y=y)
 
     elif env == "yelp":
-        return river.stream.iter_csv("yelp_review_clean.csv", target="stars")
+        return river.stream.iter_csv(f"{size}/yelp_review_clean.csv", target="stars")
+
+    elif env == "amazon":
+        return river.stream.iter_csv(f"{size}/amazon-reviews-fixed.csv", target="polarity")
     
     elif env == "twitter":
-        return river.stream.iter_csv("TwitterSentiment140_Shuffled.csv", target="target")
+        return river.stream.iter_csv(f"{size}/TwitterSentiment140_Shuffled.csv", target="target")
 
     else:
         exit()

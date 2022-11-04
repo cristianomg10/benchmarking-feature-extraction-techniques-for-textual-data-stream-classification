@@ -1,3 +1,11 @@
 datasets/
 __pycache__/
+pre-training/
 *.csv
+!*-results.csv
+10k/
+20k/
+30k/
+50k/
+100k/
+200k/
