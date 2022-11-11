@@ -16,9 +16,12 @@ from incremental_word_context import IncrementalWordContext
 from glove import Glove
 
 number_executions = 10
-datasets_available = [("amazon", 'binary'), ("twitter", 'binary'), ("yelp", 'multiclass')] 
-instances_test = [10000, 20000]#, 30000, 50000, 100000, 200000]
-dimensions = [100, 300]#, 384, 500]
+
+# datasets_available = [("amazon", 'binary'), ("twitter", 'binary'), ("yelp", 'multiclass')] 
+datasets_available = [("amazon", 'binary')] 
+
+instances_test = [10000, 20000, 30000, 50000, 100000, 200000]
+dimensions = [100, 300, 384, 500]
 store_kappa_for_checking = False
 
 filename = datetime.now().strftime("%Y%m%d%H%M%S-results.csv")
@@ -27,27 +30,27 @@ with open(f"{filename}", 'a') as f:
 
 dimension_configuration = {
     '100': [
-        ('hashing-tricks', HashingTrickTey(100)),
-        #('iwc', IncrementalWordContext(10000, 100, 7, True)),
-        #('word2vec', Word2VecTey(size=100)),
-        ('glove', Glove(dimensions=100))
+        #('hashing-tricks', HashingTrickTey(100)),
+        ('iwc', IncrementalWordContext(10000, 100, 7, True)),
+        ('word2vec', Word2VecTey(size=100)),
+        #('glove', Glove(dimensions=100))
     ],
-    '300': [
-        ('hashing-tricks', HashingTrickTey(300)),
+    #'300': [
+        #('hashing-tricks', HashingTrickTey(300)),
         #('iwc', IncrementalWordContext(10000, 300, 7, True)),
         #('word2vec', Word2VecTey(size=300)),
-        ('glove', Glove(dimensions=300))
-    ],
+        #('glove', Glove(dimensions=300))
+    #],
     '384': [
-        ('bert', BertEy()),
-        ('hashing-tricks', HashingTrickTey(384)),
-        #('iwc', IncrementalWordContext(10000, 384, 7, True)),
-        #('word2vec', Word2VecTey(size=384)),
+        #('bert', BertEy()),
+        #('hashing-tricks', HashingTrickTey(384)),
+        ('iwc', IncrementalWordContext(10000, 384, 7, True)),
+        ('word2vec', Word2VecTey(size=384)),
     ],
     '500': [
-        ('hashing-tricks', HashingTrickTey(500)),
-        #('iwc', IncrementalWordContext(10000, 500, 7, True)),
-        #('word2vec', Word2VecTey(size=500)),
+        #('hashing-tricks', HashingTrickTey(500)),
+        ('iwc', IncrementalWordContext(10000, 500, 7, True)),
+        ('word2vec', Word2VecTey(size=500)),
     ],
 }
 
@@ -66,7 +69,7 @@ for dimension in dimensions:
                     df_[["text", "target"]].sample(instancesNumber).to_csv(f"{folder_name}/TwitterSentiment140_Shuffled.csv", index=False)
                 elif env == "yelp":
                     df_ = pd.read_csv("datasets/yelp_review_clean.csv", encoding='latin-1')
-                    df_["stars"] = df_["stars"].map({1: 0, 2: 1, 3: 2, 4: 3, 5: 4})
+                    df_["stars"] = df_["stars"].replace({1: 0, 2: 1, 3: 2, 4: 3, 5: 4})
                     os.unlink(f"{folder_name}/yelp_review_clean.csv")
                     df_[["text", "stars"]].sample(instancesNumber).to_csv(f"{folder_name}/yelp_review_clean.csv", index=False)                
                 elif env == "amazon":

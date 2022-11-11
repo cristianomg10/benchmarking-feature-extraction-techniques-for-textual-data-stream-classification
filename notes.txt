@@ -1,0 +1,3 @@
+20221101181122-results.csv - Results for Amazon, Twitter, Yelp (10k and 20k). For Glove, BERT e Hashing Tricks (100 and 300)
+20221104143947-results.csv - Results for Amazon, Twitter. For Glove Bert and HT (384 and 500) - Delete Yelp records
+20221108203401-results.csv - Results for Yelp (10k, 20k, 30k, 50k, 100k, 200k) for Glove, Bert and Hashing Tricks (384 and 500)
