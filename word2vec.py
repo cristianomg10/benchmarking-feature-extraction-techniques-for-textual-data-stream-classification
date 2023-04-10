@@ -28,8 +28,6 @@ class Word2VecTey:
     def transform_one(self, document):
 
         dictToBeReturned = {}
-
-        # self.fit(document)
         represent = None
 
         for p in document.split(" "):

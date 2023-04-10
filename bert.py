@@ -26,5 +26,3 @@ class BertEy:
 
     def fit(self, document):
         pass
-        # splited = [document.split(" ") for i in range(2)]
-        # self.model.train(splited, total_examples=1, epochs=1)
