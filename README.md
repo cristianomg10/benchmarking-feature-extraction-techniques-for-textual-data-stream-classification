@@ -4,7 +4,7 @@ This repo regards the paper [1]. In this paper, we evaluated three four represen
 
 The results are stored in [this file](https://docs.google.com/spreadsheets/d/1S2RERdbW9Cxt-GwlcmeAPPtxsxjDDhJfV13Nh-KfAUc/edit?usp=sharing).
 
-[1] Thuma, B. S, Vargas, P. S., Garcia, C. M., Britto Jr, Alceu de, & Barddal, Jean P. (2023). Benchmarking Feature Extraction Techniques for Textual Data Stream Classification (*Accepted for presentation in International Joint Conference on Neural Networks*). 
+[1] Thuma, B. S, Vargas, P. S., Garcia, C. M., Britto Jr, Alceu de, & Barddal, Jean P. (2023). Benchmarking Feature Extraction Techniques for Textual Data Stream Classification (*Accepted for presentation at the International Joint Conference on Neural Networks*). 
 
 [2] Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. arXiv preprint arXiv:1810.04805.
 
